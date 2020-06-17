@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webapp-apache
+  namespace: default
+  labels:
+    role: app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: app
+  template:
+    metadata:
+      labels:
+        role: app
+    spec:
+      containers:
+      - name: webapp-apache
+        image: "localhost:5000/staging/webapp"
+        ports:
+            - containerPort: 80
+              protocol: TCP
+        resources:
+          requests:
+            cpu: 10m
