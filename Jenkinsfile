@@ -5,7 +5,7 @@ node {
 	*/
 
 	def app_name = 'unknown300-deployment'
-	def app_image_tag = "${env.DOCEKR_REGISTRY}/${app_name}:v${env.BUILD_NUMBER}"
+	def app_image_tag = "${env.REPOSITORY}/${app_name}:v${env.BUILD_NUMBER}"
 	def app_container_name = 'unknown300'
 
     stage('Clone GitHub repository') {
