@@ -56,7 +56,7 @@ node {
 		serverUrl: env.K8s_SERVER_URL,
 		contextName: env.K8s_CONTEXT_NAME,
 		clusterName: env.K8s_CLUSTER_NAME]){
-			sh ("cat azure-unknown-redis.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f - --kubeconfig "env.$K8s_CONFIG"")
+			sh 'cat azure-unknown-redis.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f - --kubeconfig "env.$K8s_CONFIG"'
 			sh ("kubectl set image deployment/${app_name} ${app_container_name}=${app_image_tag} --kubeconfig env.$K8s_CONFIG")
 		}     
     }
