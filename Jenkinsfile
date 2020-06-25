@@ -1,8 +1,12 @@
 node {
+	/*
+	CICD Azure Kubernetes deploy Unknown300 Web Application
+	Testing ....
+	*/
 
-    def app
-	def app_name = 'staging/webapp'
-	def app_image_tag = "${env.REPOSITORY}/${app_name}:v${env.BUILD_NUMBER}"
+	def app_name = 'unknown300-deployment'
+	def app_image_tag = "${env.DOCEKR_REGISTRY}/${app_name}:v${env.BUILD_NUMBER}"
+	def app_container_name = 'unknown300'
 
     stage('Clone GitHub repository') {
         /* Let's make sure we have the repository cloned to our workspace */
@@ -13,15 +17,14 @@ node {
         /* This builds the actual image; synonymous to
          * docker build on the command line */
 
-        app = docker.build($app_name)
+        sh("docker build -t ${app_image_tag} .")
     }
 
     stage('Test docker image') {
         /* Ideally, we would run a test framework against our image.
          * For this example, we're using a Volkswagen-type approach ;-) */
-        app.inside {
-            sh 'echo "Tests passed"'
-        }
+		
+        sh 'echo "Tests passed"'
     }
 
     //Stage 4: Push the Image to a Docker Registry
@@ -62,6 +65,6 @@ node {
 	stage('Cleanup Envirounment') {
         /* This removes the current docker build
          * and leaves latest in the local repository */
-		sh "docker rmi ${env.BUILD_NUMBER}"
+		sh "docker rmi $app_image_tag"
     }
 }

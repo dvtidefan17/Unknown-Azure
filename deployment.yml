@@ -1,26 +1,37 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: webapp-apache
+  name: unknown300-deployment
   namespace: default
   labels:
+    app: unknown300
     role: app
 spec:
   replicas: 2
   selector:
     matchLabels:
-      role: app
+      app: unknown300
   template:
     metadata:
       labels:
+        app: unknown300
         role: app
     spec:
       containers:
-      - name: webapp-apache
-        image: "localhost:5000/staging/webapp"
+      - name: unknown300
+        image: "localhost:5000/unknown300-deployment"
+        imagePullPolicy: Always
+        env:
+        - name: Redeploy
+          value: 
         ports:
             - containerPort: 80
               protocol: TCP
         resources:
           requests:
             cpu: 10m
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0
