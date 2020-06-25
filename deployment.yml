@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: unknown300
-        image: "localhost:5000/unknown300-deployment"
+        image: acrcicd17.azurecr.io/unknown300-deployment:v6
         imagePullPolicy: Always
         env:
         - name: Redeploy
