@@ -21,7 +21,7 @@ spec:
         "beta.kubernetes.io/os": linux
       containers:
       - name: unknown300
-        image: acrcicd17.azurecr.io/unknown300-deployment:v6
+        image: acrcicd17.azurecr.io/unknown300-deployment
         ports:
         - containerPort: 80
         resources:

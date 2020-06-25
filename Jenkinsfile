@@ -52,13 +52,8 @@ node {
 			Set as an example - K8s_SERVER_URL https://cicdaksclu-cicdresourcegrou-561fa0-43151d27.hcp.westus2.azmk8s.io:443 use the value from the output of the 
 			Set the K8s_CLUSTER_NAME to CICDAKSCluser
 		*/
-		withKubeConfig([credentialsId: env.K8s_CREDENTIALS_ID,
-		serverUrl: env.K8s_SERVER_URL,
-		contextName: env.K8s_CONTEXT_NAME,
-		clusterName: env.K8s_CLUSTER_NAME]){
-			sh 'cat azure-unknown-redis.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f - --kubeconfig "env.$K8s_CONFIG"'
-			sh ("kubectl set image deployment/${app_name} ${app_container_name}=${app_image_tag} --kubeconfig env.$K8s_CONFIG")
-		}     
+			sh ('cat azure-unknown-redis.yaml | sed "s/{{BUILD_NUMBER}}/$BUILD_NUMBER/g" | kubectl apply -f - --kubeconfig config')
+			sh ("kubectl set image deployment/${app_name} ${app_container_name}=${app_image_tag} --kubeconfig config") 
     }
 	
 	stage('Cleanup Envirounment') {
