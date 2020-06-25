@@ -39,8 +39,7 @@ node {
 		usernameVariable: 'USERNAME',
 		passwordVariable: 'PASSWORD']]) {
 			docker.withRegistry(env.DOCEKR_REGISTRY, env.DOCKER_CREDENTIALS_ID) {
-				app.push("${env.BUILD_NUMBER}")
-				app.push("latest")
+				sh("docker push ${app_image_tag}")
 			}
 		}
 	}
